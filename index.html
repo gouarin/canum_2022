@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link rel="stylesheet" href="/black.css" id="theme"> -->
+  <!-- <link rel="stylesheet" href="/theme/light.css" id="theme"> -->
+  <link rel="stylesheet" href="/theme/light.css" id="theme">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <title>Samurai - CANUM 2022</title>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <div class="row">
+          <div class="col-8">
+            <img src="./figures/logo.png">
+          </div>
+          <div class="col-4 align-self-center text-end">
+            <h1 class="title-talk">Samurai</h1>
+            <p class="subtitle-talk">CANUM 2022</p>
+            <p class="subtitle-talk">Loïc Gouarin</p>
+          </div>
+        </div>
+      </section>
+      <section data-menu-title="Context">
+        <section>
+          <h1>Context</h1>
+          <hr>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Mesh adaptation</h1>
+            </div>
+            <div class="main">
+              <div class="row">
+                <div class="col">
+                  <img id="adapt" src="figures/patch_based_light.png">
+                </div>
+                <div class="col">
+                  <img id="adapt" src="figures/cell_based_light.png">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h1 class="title">Tree data structure</h1>
+        </section>
+
+        <section class="d-flex align-content-end">
+          <div >
+              <p>Most of the open source software dedicated to adaptive mesh refinement focus on the mesh and not on the numerical schemes defined on a cartesian grid.</p>
+              <p>As a result, the API can be difficult to use
+             and code on uniform meshes must be rewritten.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Design principles of Samurai</h1>
+            </div>
+          <div class="main">
+            <ul>
+              <li>Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis</li>
+              <li>Achieve fast look-up for a cell into the structure</li>
+              <li>Maximize the memory contiguity of the stored data to allow for caching and vectorization</li>
+              <li>Facilitate inter-level operations which are common in many numerical techniques</li>
+              <li>Allow for a time evolution of the hybrid mesh in an efficient manner</li>
+              <li>Give the possibility of writing numerical schemes in a transparent way as one were on a uniform mesh</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section data-menu-title="Concepts">
+      <section>
+          <h1>Core Concepts of Samurai</h1>
+          <hr>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">1D example of adapted mesh</h1>
+            </div>
+            <div class="main">
+              <video id="adapt" data-autoplay src="/mesh_light.mp4"/>
+            </div>
+            </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+          <h1 class="title">Summary of constraints</h1>
+        </div>
+        <div class="main">
+            <ul>
+              <li>A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.</li>
+              <li>At a given resolution level, the size of the cells is equal.</li>
+              <li>The size of the cells is defined by the resolution level.</li>
+              <li>A cell is represented by an integer.</li>
+              <li>The adapted mesh is generally graded.</li>
+            </ul>
+          </div>
+        </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">The interval</h1>
+            </div>
+            <div class="main">
+            </div>
+            </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Field numbering</h1>
+            </div>
+            <div class="main">
+            </div>
+            </div>
+        </section>
+
+      </section>
+      <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Algebra of sets</h1>
+            </div>
+            <div class="main">
+              <p>The search of an admissible set is again recursive. The algorithm starts from the last dimension (y in 2d, z in 3d, …).</p>
+
+              <p>The available operators in samurai are for now</p>
+              <ul>
+                <li>the <span>intersection</span> of sets,</li>
+                <li>the <span>union</span> of sets,</li>
+                <li>the <span>difference</span> between two sets,</li>
+                <li>the <span>translation</span> of a set,</li>
+                <li>the <span>extension</span> of a set.</li>
+              </ul>
+            </div>
+            </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Other features</h1>
+            </div>
+            <div class="main">
+              <ul>
+                <li>Loop algorithms over the levels and the cells</li>
+                <li>Simplified access operator</li>
+                <li>Helper classes to construct complex meshes</li>
+                <li>Helper classes to construct N-D operators and expressions using xtensor</li>
+                <li>HDF5 support</li>
+              </ul>
+            </div>
+            </div>
+        </section>
+
+        <section data-menu-title="examples">
+          <section>
+            <h1>Examples</h1>
+            <hr>
+          </section>
+
+          <section>
+            <h1>The projection operator</h1>
+            <hr>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The domain</h1>
+              </div>
+              <div class="main">
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The projection</h1>
+              </div>
+              <div class="main">
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The implementation</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+auto u = samurai::make_field&lt;double, 1&gt;("u", mesh);
+...
+auto set = samurai::intersection(mesh[level], mesh[level + 1])
+          .on(level);
+
+set([&](const auto& i, auto)
+{
+    u(level, i) = 0.5*(u(level + 1, 2*i) + u(level + 1, 2*i + 1));
+});
+                </code></pre>
+              </div>
+            </div>
+          </section>
+
+        </section>
+      </div>
+  </div>
+  <script type="module" src="/main.js"></script>
+
+</body>
+
+</html>
