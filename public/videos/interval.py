@@ -174,7 +174,6 @@ class Interval(Line):
 
         # turn into into an np array to scale by just applying the function
         self.x_range = self.dx*np.array([*range, 1], dtype=float)
-        print(self.x_range)
         self.x_min, self.x_max, self.x_step = scaling.function(self.x_range)
         self.length = length
         self.unit_size = unit_size
