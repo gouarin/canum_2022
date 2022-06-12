@@ -1,6 +1,20 @@
 import numpy as np
 from manim import *
 from interval import *
+from number_line import *
+
+from manim.utils.tex_templates import _new_ams_template
+
+oswald = _new_ams_template()
+oswald.description = "Oswald"
+oswald.add_to_preamble(
+    r"""
+\usepackage[T1]{fontenc}
+\usepackage{Oswald}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[frenchmath]{mathastext}
+""",
+)
 
 config.background_color = "#ffffff"
 # config.background_color = "#000000"
@@ -18,6 +32,13 @@ intervals = {
     2: [[10, 12], [16, 18]],
 }
 
+with register_font("../theme/fonts/Oswald-Regular.ttf"):
+    Text.set_default(font="Oswald")
+
+MathTex.set_default(tex_template=oswald, font_size=30, color=default_color)
+
+Interval.set_default(stroke_width=stroke_width, color=default_color, tick_size=0.1)
+
 def init_mesh():
     mesh = []
     colors = []
@@ -28,16 +49,16 @@ def init_mesh():
         colors.append(intervals_color[k])
         levels.append(k)
         for i in v:
-            mesh[-1].add(Interval(k, range=i,  stroke_width=stroke_width, color=default_color))
+            mesh[-1].add(Interval(k, range=i))
 
     return VGroup(*mesh), colors, levels
 
 def init_axe():
-    level_axe = NumberLine(x_range=[0, 3], unit_size=2, include_tip=True, tip_length=0.1, rotation=90*DEGREES, label_direction=LEFT, color=default_color)
-    level_axe.add_numbers(font_size=34, color=default_color)
-    level_axe.shift(LEFT + 3*UP)
+    level_axe = MyNumberLine(x_range=[0, 2.5], unit_size=2, include_tip=True, tip_length=0.1, rotation=90*DEGREES, label_direction=LEFT, color=default_color)
+    level_axe.add_numbers()
+    level_axe.shift(LEFT + 2.5*UP)
 
-    level_label = Text("level", font_size=20, color=default_color)
+    level_label = MathTex("Level")
     level_label.next_to(level_axe, LEFT)
 
     return VGroup(level_axe, level_label)
@@ -66,16 +87,17 @@ class mesh_scene_2_light(MovingCameraScene):
                   Create(axe),
                   self.camera.frame.animate.move_to(all)
         )
+        self.wait(1)
 
 def init_dx(ug):
-    dx = MathTex(r"\Delta x = 2^{-level}", font_size=20, color=default_color)
+    dx = MathTex(r"\Delta x = 2^{-level}", font_size=20)
     dx.move_to([2, 1, 0])
 
     level_info = VGroup()
     for i in range(len(ug)):
-        itext = MathTex(f"\\frac{{1}}{{ {1<<i} }}" if i != 0 else "1", font_size=16, color=default_color)
+        itext = MathTex(f"\\frac{{1}}{{ {1<<i} }}" if i != 0 else "1", font_size=16)
         itext.move_to(ug[i].get_center() - [0, .3, 0])
-        l_text = MathTex(f"level \quad {i}", font_size=16, color=default_color)
+        l_text = MathTex(f"level \quad {i}", font_size=16)
         l_text.move_to([-1, i, 0])
         level_info.add(VGroup(l_text, itext))
 
@@ -95,7 +117,7 @@ class mesh_scene_3_light(MovingCameraScene):
         self.wait(1)
         self.camera.frame.save_state()
 
-        unit_mesh = [Interval(l, range=[0, 1], stroke_width=stroke_width*0.5, color=c) for m, l, c in zip(mesh, levels, colors)]
+        unit_mesh = [Interval(l, range=[0, 1], stroke_width=stroke_width*0.5, color=c, tick_size=0.05) for m, l, c in zip(mesh, levels, colors)]
         [m.shift(l*UP) for m, l in zip(unit_mesh, levels)]
 
         ug = VGroup(*unit_mesh)
@@ -166,7 +188,7 @@ class mesh_scene_4_light(MovingCameraScene):
 
         self.play(*[m.animate.add_cell_numbers(font_size=24, color=default_color) for me in mesh for m in me])
 
-        center = MathTex("c_i^l = \\left(i +\\frac{1}{2}\\right)\Delta x", font_size=36, color=BLUE)
+        center = MathTex("c_i^l = \\left(i +\\frac{1}{2}\\right)\Delta x", font_size=36)
         center.move_to([7, 5, 0])
 
         self.play(Create(center))
@@ -207,4 +229,95 @@ class mesh_scene_4_light(MovingCameraScene):
         self.wait(1)
 
         self.play(r0.animate.move_to([0.25, 2.3, 0]), Transform(c0, c4))
+        self.wait()
+
+class interval_scene_1_light(MovingCameraScene):
+    def construct(self):
+        mesh, colors, levels = init_mesh()
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+
+        axe = init_axe()
+        all = VGroup(axe, mesh)
+
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
+
+        level_tex = VGroup()
+        for i in range(3):
+            level_tex.add(MathTex(f"Level \\, {i} \\rightarrow ", font_size=36, color=intervals_color[i]))
+            level_tex[-1].move_to([0, -1.5 - 0.75*i, 0])
+
+        all_all = VGroup(all, level_tex)
+        self.camera.frame.move_to(all_all)
+        self.camera.frame.scale(1.1)
+
+        [m.add_cell_numbers(font_size=24, color=default_color) for me in mesh for m in me]
+
+        self.add(all_all)
+        self.wait(1)
+
+        r = []
+        for k, v in intervals.items():
+            dx = 1./(1<<k)
+            for i, e in enumerate(v):
+                r.append(Rectangle(width=dx*(e[1] - e[0]), height=0.3, color=intervals_color[k], fill_opacity=0.5))
+                r[-1].move_to([0.5*dx*(e[1] + e[0]), 2*k, 0])
+                self.play(Create(r[-1]))
+                self.wait(1)
+
+                t = MathTex(f"[{e[0]}, {e[1]}[", font_size=36, color=intervals_color[k])
+                if i==0:
+                    t.next_to(level_tex[k], RIGHT)
+                else:
+                    t.next_to(r[-2], RIGHT)
+                self.play(Transform(r[-1], t))
+                self.wait()
+
+        self.wait()
+
+
+class interval_scene_2_light(MovingCameraScene):
+    def construct(self):
+        mesh, colors, levels = init_mesh()
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+
+        axe = init_axe()
+        all = VGroup(axe, mesh)
+
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
+
+        level_tex = VGroup()
+        for i in range(3):
+            level_tex.add(MathTex(f"Level \\, {i} \\rightarrow ", font_size=36, color=intervals_color[i]))
+            level_tex[-1].move_to([0, -1.5 - 0.75*i, 0])
+
+        all_all = VGroup(all, level_tex)
+        self.camera.frame.move_to(all_all)
+        self.camera.frame.scale(1.1)
+
+        [m.add_cell_numbers(font_size=24) for me in mesh for m in me]
+
+        index = 0
+        for k, v in intervals.items():
+            for ie, e in enumerate(v):
+                for i in range(e[1]-e[0]):
+                    center = mesh[k][ie].cell_numbers[i] .get_center()
+                    mesh[k][ie].cell_numbers[i] = MathTex(index, font_size=24)
+                    mesh[k][ie].cell_numbers[i].move_to(center)
+                    index += 1
+
+        self.add(all_all)
+
+        index = 0
+        for k, v in intervals.items():
+            dx = 1./(1<<k)
+            for i, e in enumerate(v):
+                t1 = MathTex(f"[{e[0]}, {e[1]}[@{index - e[0]}", font_size=36, color=intervals_color[k])
+                if i==0:
+                    t1.next_to(level_tex[k], RIGHT)
+                else:
+                    t1.next_to(t0, RIGHT)
+                t0 = t1
+                index += e[1] - e[0]
+                self.add(t0)
+
         self.wait()

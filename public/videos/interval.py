@@ -476,8 +476,11 @@ class Interval(Line):
         if label_constructor is None:
             label_constructor = self.label_constructor
 
-        num_mob = Integer(
-            i, font_size=font_size, mob_class=label_constructor, **number_config
+        # num_mob = Integer(
+        #     i, font_size=font_size, mob_class=label_constructor, **number_config
+        # )
+        num_mob = MathTex(
+            i, font_size=font_size, **number_config
         )
 
         num_mob.next_to(self.number_to_point(x), direction=direction, buff=buff)

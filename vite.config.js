@@ -1,3 +1,3 @@
 export default {
-    base: '/MAP586/courses/basics/'
+    base: '/canum_2022/'
 }
