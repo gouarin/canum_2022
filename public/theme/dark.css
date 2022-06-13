@@ -20,6 +20,14 @@
        url('fonts/Gelasio-Regular.ttf') format('truetype'),
 }
 
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('fonts/Oswald-Regular.ttf') format('truetype'),
+}
+
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff;
 }
@@ -32,11 +40,11 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-main-font: Gelasio;
   --r-line-color: #750013;
   --r-main-font-size: 26px;
-  --r-main-color: #222;
+  --r-main-color: rgb(255, 255, 255);
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
   --r-heading-font: Cinzel;
-  --r-heading-color: #222;
+  --r-heading-color: rgb(255, 255, 255);
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: uppercase;
@@ -48,7 +56,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-heading3-size: 1.3em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #000000;
+  --r-link-color: #750013;
   --r-link-color-dark: #750013;
   --r-link-color-hover: #caa000;
   --r-selection-background-color: #98bdef;
@@ -56,16 +64,16 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 .reveal-viewport {
-  background: #fff;
+  background: rgb(0, 0, 0);
   background-color: var(--r-background-color);
 }
 
 .reveal {
+  background-color: var(--r-background-color);
   font-family: var(--r-main-font);
   font-size: var(--r-main-font-size);
   font-weight: normal;
   color: var(--r-main-color);
-  background-color: var(--r-background-color);
 }
 
 .reveal ::selection {
@@ -376,6 +384,13 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 /*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+ .reveal .controls-arrow {
+  color: var(--r-link-color);
+}
+
+/*********************************************
  * PROGRESS BAR
  *********************************************/
 .reveal .progress {
@@ -467,4 +482,29 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   font-size: 26px;
   margin: 0;
   color: var(--r-line-color);
+}
+
+.reveal span.interval_symb
+{
+  font-family: Oswald;
+  font-size: 50px;
+  color: #527b77;
+}
+.reveal span.interval_bound
+{
+  font-family: Oswald;
+  font-size: 50px;
+  color: #c9a008;
+}
+.reveal span.interval_offset
+{
+  font-family: Oswald;
+  font-size: 50px;
+  color: #f46000;
+}
+.reveal span.interval_step
+{
+  font-family: Oswald;
+  font-size: 50px;
+  color: var(--r-main-color);
 }

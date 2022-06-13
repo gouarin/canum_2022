@@ -1,3 +1,4 @@
+from turtle import color
 import numpy as np
 from manim import *
 from interval import *
@@ -24,7 +25,10 @@ center = [2, 3, 0]
 stroke_width = 4
 default_color = "#000001"
 
-intervals_color = ["#f98a00", "#009a8e", "#750013"]
+intervals_color = ["#517b77", "#caa000", "#f66000"]
+# intervals_color = ["#f98a00", "#009a8e", "#750013"]
+# intervals_color = ["#A1C181", "#FCCA46", "#FE7F2D"]
+# intervals_color = ["#095473", "#5B95AA", "#349B90", "#B9D6BC", "#F2D2A2"]
 
 intervals = {
     0: [[0, 2], [5, 6]],
@@ -320,4 +324,191 @@ class interval_scene_2_light(MovingCameraScene):
                 index += e[1] - e[0]
                 self.add(t0)
 
+        self.wait()
+
+class tree_light(Scene):
+    def construct(self):
+        self.camera.frame_width = 6
+        self.camera.resize_frame_shape()
+
+        r0 = Square(1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+        s = Square(0.1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+        r0.next_to(s, UP)
+
+        divide = VGroup(VGroup(r0))
+        s_length=1
+        level = 2
+        for l in range(level):
+            divide += VGroup()
+            for root in  divide[l]:
+                for j in range(2):
+                    for i in range(2):
+                        r = Square(s_length/2, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                        r.move_to(root.get_center() + [-s_length/4 + s_length/2*i, -s_length/4 + s_length/2*j, 0])
+                        divide[-1] += r
+            s_length /= 2
+
+        divide += VGroup()
+        for root in [divide[2][3], divide[2][6], divide[2][9], divide[2][12]]:
+            for j in range(2):
+                for i in range(2):
+                    r = Square(s_length/2, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                    r.move_to(root.get_center() + [-s_length/4 + s_length/2*i, -s_length/4 + s_length/2*j, 0])
+                    divide[-1] += r
+
+        nodes = VGroup(VGroup(s))
+        lines = VGroup()
+        length = 6
+        for i in range(level):
+            nodes += VGroup()
+            lines += VGroup()
+            for j in nodes[i]:
+                for k in range(4):
+                    n = Square(0.1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                    n.move_to(j.get_center() + [-length/2 + length/8 + k*length/4, -0.3, 0])
+                    nodes[-1] += n
+                    lines[-1] += Line(j.get_center(), n.get_center(), stroke_width=1, color=default_color)
+            length /= 4
+
+        nodes += VGroup()
+        lines += VGroup()
+
+        i = 3
+        for j in [nodes[2][3], nodes[2][6], nodes[2][9], nodes[2][12]]:
+            for k in range(4):
+                n = Square(0.1, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                n.move_to(j.get_center() + [-length/2 + length/8 + k*length/4, -0.3, 0])
+                nodes[-1] += n
+                lines[-1] += Line(j.get_center(), n.get_center(), stroke_width=1, color=default_color)
+
+        self.add(r0, s)
+        self.wait(3)
+        for i in range(3):
+            self.add(lines[i], divide[i+1])
+            self.add(nodes[i], nodes[i+1])
+            self.wait(2)
+
+class mesh_2d_scene_1_light(MovingCameraScene):
+    def construct(self):
+        self.next_section()
+        level0 = VGroup()
+        for j in range(4):
+            for i in range(4):
+                r = Square(1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                r.move_to([i, j, 0])
+                level0.add(r)
+
+        level1 = VGroup()
+        for j in range(4):
+            for i in range(4):
+                r = Square(0.5, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                r.move_to([0.75+i*0.5, 0.75+j*0.5, 0])
+                level1.add(r)
+
+        self.add(level0, level1)
+
+        self.camera.frame.move_to(level0)
+        self.camera.frame.scale(0.8)
+
+        path = [
+            level0[0],
+            level0[1],
+            level0[4],
+            level1[0],
+            level1[1],
+            level1[4],
+            level1[5],
+            level0[2],
+            level0[3],
+            level1[2],
+            level1[3],
+            level1[6],
+            level1[7],
+            level0[7],
+            level0[8],
+            level1[8],
+            level1[9],
+            level1[12],
+            level1[13],
+            level0[12],
+            level0[13],
+            level1[10],
+            level1[11],
+            level1[14],
+            level1[15],
+            level0[11],
+            level0[14],
+            level0[15],
+        ]
+
+        lines = VGroup()
+        for i in range(len(path)-1):
+            lines.add(Line(path[i].get_center(), path[i+1].get_center(), stroke_width=stroke_width))
+
+        self.play(Create(lines), run_time=4)
+        self.wait(1)
+
+        stencil = VGroup()
+        for i in range(5):
+            r = Square(.5, color=WHITE, fill_color=intervals_color[1], fill_opacity=1)
+            r.move_to([1.75, 1.75, 0])
+            stencil += r
+
+        field = VGroup()
+        length = 0.4
+        for i in range(len(path)):
+            r = Square(length, color=WHITE, fill_color=path[i].color, fill_opacity=1)
+            r.move_to([1.5 + length/2 - len(path)/2 * length + i*length, -1.25, 0])
+            field += r
+
+        self.play(FadeIn(field))
+        self.wait(1)
+        self.next_section()
+        self.play(FadeOut(lines))
+        self.wait(1)
+
+        s_i = [12, 17, 22, 23, 24]
+        field_s = VGroup()
+        for i in s_i:
+            r = Square(length, color=WHITE, fill_color=intervals_color[1], fill_opacity=1)
+            r.move_to([1.5 + length/2 - len(path)/2 * length + i*length, -1.25, 0])
+            field_s += r
+
+        self.play(FadeIn(field_s[2]), FadeIn(stencil))
+        field_s -= field_s[2]
+        self.wait(1)
+
+        self.play(stencil[0].animate.shift([0.5, 0, 0]),
+                  stencil[1].animate.shift([-0.5, 0, 0]),
+                  stencil[2].animate.shift([0, 0.5, 0]),
+                  stencil[3].animate.shift([0, -0.5, 0]),
+                  FadeIn(field_s),
+        )
+        self.wait(1)
+
+
+class projection_light(MovingCameraScene):
+    def construct(self):
+        i0 = Interval(0, [0, 4], color=intervals_color[0])
+        i1 = Interval(1, [2, 6], color=intervals_color[1])
+        i1.shift(UP)
+        intervals = VGroup(i0, i1)
+
+        eq = MathTex("u(l, i) = \\frac{u(l+1, 2i) + u(l+1, 2i+1)}{2}", tex_template=TexTemplate())
+        eq.next_to(i0, 2*DOWN)
+
+        arrows = VGroup()
+        arrows.add(Arrow([1.25, 1, 0], [1.5, 0, 0], color=default_color))
+        arrows.add(Arrow([1.75, 1, 0], [1.5, 0, 0], color=default_color))
+        arrows.add(Arrow([2.25, 1, 0], [2.5, 0, 0], color=default_color))
+        arrows.add(Arrow([2.75, 1, 0], [2.5, 0, 0], color=default_color))
+
+        self.camera.frame.move_to(intervals)
+        self.camera.frame.scale(0.7)
+        self.play(Create(intervals))
+
+        self.wait()
+
+        self.play(FadeIn(eq))
+        self.play(FadeIn(arrows))
         self.wait()

@@ -38,7 +38,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 :root {
   --r-background-color: rgb(255, 255, 255);
   --r-main-font: Gelasio;
-  --r-line-color: #750013;
+  --r-line-color: #9b001a;
   --r-main-font-size: 26px;
   --r-main-color: #222;
   --r-block-margin: 20px;
@@ -56,9 +56,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-heading3-size: 1.3em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #000000;
-  --r-link-color-dark: #750013;
-  --r-link-color-hover: #caa000;
+  --r-link-color: #9b001a;
+  --r-link-color-dark: #9b001a;
+  --r-link-color-hover: #9a001a79;
   --r-selection-background-color: #98bdef;
   --r-selection-color: #fff;
 }
@@ -122,7 +122,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal span
 {
-  color : #af0000;
+  color : #9b001a;
 }
 
 .reveal hr {
@@ -379,6 +379,13 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {
+  color: var(--r-link-color);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+ .reveal .controls-arrow {
   color: var(--r-link-color);
 }
 
