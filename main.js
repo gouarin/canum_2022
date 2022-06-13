@@ -3,7 +3,7 @@ import 'reveal.js/dist/reveal.css'
 // node_modules/reveal.js/dist/theme
 //  beige, black, blood, league, moon, night, serif, simple, ...
 // import 'reveal.js/dist/theme/black.css'
-import 'highlight.js/styles/stackoverflow-light.css'
+import 'highlight.js/styles/github.css'
 // import 'reveal.js/plugin/highlight/monokai.css'
 import 'reveal.js-menu/menu.css'
 

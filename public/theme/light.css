@@ -28,6 +28,14 @@
        url('fonts/Oswald-Regular.ttf') format('truetype'),
 }
 
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('fonts/Caveat-Regular.ttf') format('truetype'),
+}
+
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff;
 }
@@ -61,6 +69,21 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-link-color-hover: #9a001a79;
   --r-selection-background-color: #98bdef;
   --r-selection-color: #fff;
+}
+
+.reveal .color_0
+{
+  color: #517b77;
+}
+
+.reveal .color_1
+{
+  color: #caa000;
+}
+
+.reveal .color_2
+{
+  color: #f66000;
 }
 
 .reveal-viewport {
@@ -208,6 +231,32 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal ul ul ul {
   list-style-type: circle;
+}
+
+.reveal ul.myclass
+{
+  list-style-type: none;
+  font-size: 13px;
+}
+
+.reveal ul.myclass ul
+{
+  list-style-type: none;
+  padding-left: 10px;
+
+}
+
+.reveal ul.myclass li {
+  font-size: 16px;
+  margin: 0 5px 5px 0;
+}
+
+.reveal ul.myclass ul {
+  margin: 0 5px 10px 0;
+}
+
+.reveal .caveat {
+  font-family: caveat;
 }
 
 .reveal ul ul,

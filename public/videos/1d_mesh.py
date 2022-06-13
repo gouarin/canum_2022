@@ -67,32 +67,6 @@ def init_axe():
 
     return VGroup(level_axe, level_label)
 
-class mesh_scene_1_light(MovingCameraScene):
-    def construct(self):
-        mesh, colors, levels = init_mesh()
-        self.camera.frame.move_to(mesh)
-        self.play(Create(mesh))#, run_time=2)
-
-        self.play(*[m.animate.set_color(c) for m, c in zip(mesh, colors)], run_time=2)
-
-class mesh_scene_2_light(MovingCameraScene):
-    def construct(self):
-        mesh, colors, levels = init_mesh()
-        self.camera.frame.move_to(mesh)
-        [m.set_color(c) for m, c in zip(mesh, colors)]
-        self.add(mesh)
-
-        self.wait(1)
-
-        axe = init_axe()
-        all = VGroup(axe, mesh)
-
-        self.play(*[m.animate.shift(2*l*UP) for m, l in zip(mesh, levels)],
-                  Create(axe),
-                  self.camera.frame.animate.move_to(all)
-        )
-        self.wait(1)
-
 def init_dx(ug):
     dx = MathTex(r"\Delta x = 2^{-level}", font_size=20)
     dx.move_to([2, 1, 0])
@@ -106,33 +80,44 @@ def init_dx(ug):
         level_info.add(VGroup(l_text, itext))
 
     return dx, level_info
-class mesh_scene_3_light(MovingCameraScene):
+
+class example_1d_light(MovingCameraScene):
     def construct(self):
+        self.next_section()
         mesh, colors, levels = init_mesh()
-        [m.set_color(c) for m, c in zip(mesh, colors)]
+        self.camera.frame.move_to(mesh)
+        self.play(Create(mesh))#, run_time=2)
+
+        self.play(*[m.animate.set_color(c) for m, c in zip(mesh, colors)], run_time=2)
+        self.wait()
+
+        self.next_section()
 
         axe = init_axe()
         all = VGroup(axe, mesh)
 
-        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
-        self.camera.frame.move_to(all)
-        self.add(all)
-
+        self.play(*[m.animate.shift(2*l*UP) for m, l in zip(mesh, levels)],
+                  Create(axe),
+                  self.camera.frame.animate.move_to(all)
+        )
         self.wait(1)
-        self.camera.frame.save_state()
+
+        self.next_section()
 
         unit_mesh = [Interval(l, range=[0, 1], stroke_width=stroke_width*0.5, color=c, tick_size=0.05) for m, l, c in zip(mesh, levels, colors)]
         [m.shift(l*UP) for m, l in zip(unit_mesh, levels)]
 
         ug = VGroup(*unit_mesh)
+        mesh_copy = mesh.copy()
         g = VGroup(*mesh)
+        self.camera.frame.save_state()
         g.save_state()
-        self.play(axe.animate.set_opacity(0),
+        self.play(FadeOut(axe),
                   Transform(g, ug),
                   self.camera.frame.animate.scale(0.5).move_to(ug)
         )
 
-        self.wait(1)
+        self.wait()
 
         dx, level_info = init_dx(ug)
         self.play(Create(dx))
@@ -144,53 +129,19 @@ class mesh_scene_3_light(MovingCameraScene):
         self.play(Create(level_info[2]))
 
         self.wait()
-        # self.play(*[m.animate.add_cell_numbers(font_size=24, color=default_color) for me in mesh for m in me])
 
-        # self.camera.frame.save_state()
+        self.next_section()
 
-        # unit_mesh = [Interval(l, range=[0, 1], stroke_width=stroke_width, color=c) for m, l, c in zip(mesh, levels, colors)]
-        # [m.shift(l*UP) for m, l in zip(unit_mesh, levels)]
-
-        # ug = VGroup(*unit_mesh)
-        # g = VGroup(*mesh)
-        # g.save_state()
-        # self.play(axe.animate.set_opacity(0),
-        #           Transform(g, ug),
-        #           self.camera.frame.animate.scale(0.5).move_to(ug)
-        # )
-
-        # self.wait(1)
-
-        # self.play(axe.animate.set_opacity(1),
-        #           Restore(g),
-        #           Restore(self.camera.frame))
-
+        ug = VGroup(*mesh_copy)
+        self.play(FadeOut(dx),
+                  FadeOut(level_info),
+                  FadeIn(axe),
+                  Transform(g, ug),
+                  self.camera.frame.animate.restore()
+        )
         self.wait()
 
-class mesh_scene_4_light(MovingCameraScene):
-    def construct(self):
-        mesh, colors, levels = init_mesh()
-        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
-
-        [m.set_color(c) for m, c in zip(mesh, colors)]
-        axe = init_axe()
-        all = VGroup(axe, mesh)
-
-        unit_mesh = VGroup(*[Interval(l, range=[0, 1], stroke_width=stroke_width*0.5, color=c) for m, l, c in zip(mesh, levels, colors)])
-        [m.shift(l*UP) for m, l in zip(unit_mesh, levels)]
-
-        dx, level_info = init_dx(unit_mesh)
-
-        old = VGroup(unit_mesh, dx, level_info)
-        self.camera.frame.scale(0.5).move_to(unit_mesh)
-        self.add(old)
-
-        self.play(
-                  Transform(old, all),
-                  self.camera.frame.animate.scale(2).move_to(all)
-        )
-
-        self.play(*[m.animate.add_cell_numbers(font_size=24, color=default_color) for me in mesh for m in me])
+        self.play(*[m.animate.add_cell_numbers(font_size=24, color=default_color) for me in mesh_copy for m in me])
 
         center = MathTex("c_i^l = \\left(i +\\frac{1}{2}\\right)\Delta x", font_size=36)
         center.move_to([7, 5, 0])
@@ -226,7 +177,7 @@ class mesh_scene_4_light(MovingCameraScene):
         self.wait()
 
         i = Interval(1, range=[0, 4],  stroke_width=stroke_width, color=intervals_color[1])
-        i.set_opacity(0.25)
+        i.set_opacity(0.5)
         i.add_cell_numbers(font_size=24, color=default_color)
         i.shift(2*UP)
         self.play(Create(i))
@@ -511,4 +462,29 @@ class projection_light(MovingCameraScene):
 
         self.play(FadeIn(eq))
         self.play(FadeIn(arrows))
+        self.wait()
+
+class projection_code(Scene):
+    def construct(self):
+        step_1='auto u = samurai::make_field<double, 1>("u", mesh);'
+        step_2 = """
+auto set = samurai::intersection(mesh[level], mesh[level + 1])
+          .on(level);
+        """
+
+# auto set = samurai::intersection(mesh[level], mesh[level + 1])
+#           .on(level);
+
+# set([&](const auto& i, auto)
+# {
+#     u(level, i) = 0.5*(u(level + 1, 2*i) + u(level + 1, 2*i + 1));
+# });
+#         '''
+
+        c_1 = Code(code=step_1, tab_width=4, language="cpp", font="Monospace", insert_line_no=False)
+        self.add(c_1)
+        c_2 = Code(code=step_2, tab_width=4, language="cpp", font="Monospace", insert_line_no=False)
+        c_2.next_to(c_1, DOWN)
+        self.add(c_2)
+
         self.wait()
