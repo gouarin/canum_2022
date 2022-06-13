@@ -12,8 +12,8 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
   <title>Samurai - CANUM 2022</title>
-  <script type="module" crossorigin src="/canum_2022/assets/index.24523fd4.js"></script>
-  <link rel="stylesheet" href="/canum_2022/assets/index.165caeb5.css">
+  <script type="module" crossorigin src="/canum_2022/assets/index.24e14b60.js"></script>
+  <link rel="stylesheet" href="/canum_2022/assets/index.00873513.css">
 </head>
 
 <body>
@@ -31,6 +31,7 @@
           </div>
         </div>
       </section>
+
       <section data-menu-title="Context">
         <section>
           <h1>Context</h1>
@@ -56,7 +57,36 @@
         </section>
 
         <section>
-          <h1 class="title">Tree data structure</h1>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Tree data structure</h1>
+            </div>
+            <div class="main">
+              <video id="adapt" data-autoplay src="/canum_2022/videos/tree_light.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Tree data structure : Z-curve</h1>
+            </div>
+            <div class="main">
+              <video data-autoplay src="/canum_2022/videos/mesh_2d_scene_1_light_0000.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Tree data structure : Z-curve</h1>
+            </div>
+            <div class="main">
+              <video data-autoplay src="/canum_2022/videos/mesh_2d_scene_1_light_0001.mp4"/>
+            </div>
+          </div>
         </section>
 
         <section class="d-flex align-content-end">
@@ -74,12 +104,12 @@
             </div>
           <div class="main">
             <ul>
-              <li>Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis</li>
-              <li>Achieve fast look-up for a cell into the structure</li>
-              <li>Maximize the memory contiguity of the stored data to allow for caching and vectorization</li>
-              <li>Facilitate inter-level operations which are common in many numerical techniques</li>
-              <li>Allow for a time evolution of the hybrid mesh in an efficient manner</li>
-              <li>Give the possibility of writing numerical schemes in a transparent way as one were on a uniform mesh</li>
+              <li class="fragment">Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis</li>
+              <li class="fragment">Achieve fast look-up for a cell into the structure</li>
+              <li class="fragment">Maximize the memory contiguity of the stored data to allow for caching and vectorization</li>
+              <li class="fragment">Facilitate inter-level operations which are common in many numerical techniques</li>
+              <li class="fragment">Allow for a time evolution of the hybrid mesh in an efficient manner</li>
+              <li class="fragment">Give the possibility of writing numerical schemes in a transparent way as one were on a uniform mesh</li>
             </ul>
           </div>
         </div>
@@ -98,7 +128,7 @@
               <h1 class="title">1D example of adapted mesh</h1>
             </div>
             <div class="main">
-              <video id="adapt" data-autoplay src="/canum_2022/videos/mesh_scene_1_light.mp4"/>
+              <video id="adapt" data-autoplay src="/canum_2022/videos/example_1d_light_0000.mp4"/>
             </div>
             </div>
         </section>
@@ -109,7 +139,7 @@
               <h1 class="title">1D example of adapted mesh</h1>
             </div>
             <div class="main">
-              <video id="adapt" data-autoplay src="/canum_2022/videos/mesh_scene_2_light.mp4"/>
+              <video id="adapt" data-autoplay src="/canum_2022/videos/example_1d_light_0001.mp4"/>
             </div>
             </div>
         </section>
@@ -120,7 +150,7 @@
               <h1 class="title">1D example of adapted mesh</h1>
             </div>
             <div class="main">
-              <video id="adapt" data-autoplay src="/canum_2022/videos/mesh_scene_3_light.mp4"/>
+              <video id="adapt" data-autoplay src="/canum_2022/videos/example_1d_light_0002.mp4"/>
             </div>
             </div>
         </section>
@@ -131,7 +161,7 @@
               <h1 class="title">1D example of adapted mesh</h1>
             </div>
             <div class="main">
-              <video id="adapt" data-autoplay src="/canum_2022/videos/mesh_scene_4_light.mp4"/>
+              <video id="adapt" data-autoplay src="/canum_2022/videos/example_1d_light_0003.mp4"/>
             </div>
             </div>
         </section>
@@ -143,11 +173,11 @@
         </div>
         <div class="main">
             <ul>
-              <li>A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.</li>
-              <li>At a given resolution level, the size of the cells is equal.</li>
-              <li>The size of the cells is defined by the resolution level.</li>
-              <li>A cell is represented by an integer.</li>
-              <li>The adapted mesh is generally graded.</li>
+              <li class="fragment">A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.</li>
+              <li class="fragment">At a given resolution level, the size of the cells is equal.</li>
+              <li class="fragment">The size of the cells is defined by the resolution level.</li>
+              <li class="fragment">A cell is represented by an integer.</li>
+              <li class="fragment">The adapted mesh is generally graded.</li>
             </ul>
           </div>
         </div>
@@ -189,6 +219,213 @@
             </div>
             <div class="main">
               <video id="adapt" data-autoplay src="/canum_2022/videos/interval_scene_2_light.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">What happens in 2D ?</h1>
+            </div>
+            <div class="main">
+              <div class="row">
+                <div class="col-4 align-self-center">
+                  <img id="adapt" src="figures/2d_example.png">
+                </div>
+                <div class="col-3 fragment align-self-center border border-2 p-2" data-fragment-index="1">
+                  <ul class="myclass">
+                    <li class="color_0" ><strong>Level 0</strong></li>
+                    <ul>
+                      <li>y: 0 <span>&#8594;</span> [0, 4[</li>
+                      <li>y: 1 <span>&#8594;</span> [0, 1[, [3, 4[</li>
+                      <li>y: 2 <span>&#8594;</span> [0, 1[, [3, 4[</li>
+                      <li>y: 3 <span>&#8594;</span> [0, 3[</li>
+                    </ul>
+
+                  <li class="color_1"><strong>Level 1</strong></li>
+                    <ul>
+                      <li>y: 2 <span>&#8594;</span> [2, 6[</li>
+                      <li>y: 3 <span>&#8594;</span> [2, 6[</li>
+                      <li>y: 4 <span>&#8594;</span> [2, 4[, [5, 6[</li>
+                      <li>y: 5 <span>&#8594;</span> [2, 6[</li>
+                      <li>y: 6 <span>&#8594;</span> [6, 8[</li>
+                      <li>y: 7 <span>&#8594;</span> [6, 7[</li>
+                </ul>
+
+                    <li class="color_2"><strong>Level 2</strong></li>
+                    <ul>
+                      <li>y: 8  <span>&#8594;</span> [8, 10[</li>
+                      <li>y: 9  <span>&#8594;</span> [8, 10[</li>
+                      <li>y: 14 <span>&#8594;</span> [14, 16[</li>
+                      <li>y: 15 <span>&#8594;</span> [14, 16[</li>
+                </ul>
+              </ul>
+                <div class="text-center fragment" data-fragment-index="4">
+                <span class="caveat">cell list</span>
+                </div>
+                </div>
+                <div class="col-4 fragment  align-self-center border border-2 m-2 p-2" data-fragment-index="2">
+
+                  <ul class="myclass">
+                    <li class="color_0"><strong>Level 0</strong></li>
+                    <ul>
+                      <li>x: [0, 4[, [0, 1[, [3, 4[, [0, 1[, [3, 4[, [0, 3[</li>
+                      <li>y: [0, 4[ <span class="fragment" data-fragment-index="3">@0</span></li>
+                      <li>y-offset: [0, 1, 3, 5, 6]</li>
+                    </ul>
+                    <li class="color_1"><strong>Level 1</strong></li>
+                      <ul>
+                        <li>x: [2, 6[, [2, 6[, [2, 4[, [5, 6[, [2, 6[, [6, 8[, [6, 7[</li>
+                        <li>y: [2, 8[<span class="fragment" data-fragment-index="3">@-2</span></li>
+                        <li>y-offset = [0, 1, 2, 4, 5, 6, 7]</li>
+                      </ul>
+                    <li class="color_2"><strong>Level 2</strong></li>
+                      <ul>
+                        <li>x: [8, 10[, [8, 10[, [14, 16[, [14, 16[</li>
+                        <li>y: [8, 10[<span class="fragment" data-fragment-index="3">@-8</span>, [14, 16[<span class="fragment" data-fragment-index="3">@-12</span></li>
+                        <li>y-offset: [0, 1, 2, 3, 4]</li>
+                      </ul>
+                  </ul>
+                  <div class="text-center fragment" data-fragment-index="4">
+                    <span class="caveat">cell array</span>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">What happens in 2D ?</h1>
+            </div>
+            <div class="main">
+              <div class="row">
+                <div class="col-5 align-self-center">
+                  <img id="adapt" src="figures/2d_example_numbering.png">
+                </div>
+                <div class="col align-self-center border border-2 p-2">
+                  <ul class="myclass">
+                    <li class="color_0" ><strong>Level 0</strong></li>
+                    <ul>
+                      <li>x: [0, 4[ <span>@ 0</span>, [0, 1[ <span>@ 4</span>, [3, 4[ <span>@ 2</span>, [0, 1[ <span>@ 6</span>, [3, 4[ <span>@ 4</span>, [0, 3[ <span>@ 4</span></li>
+                      <li>y: [0, 4[ <span>@ 0</span></li>
+                      <li>y-offset: [0, 1, 3, 5, 6]</li>
+                    </ul>
+
+                  <li class="color_1"><strong>Level 1</strong></li>
+                    <ul>
+                      <li>x: [2, 6[ <span>@ 9</span>, [2, 6[ <span>@ 13</span>, [2, 4[ <span>@ 17</span>, [5, 6[ <span>@ 16</span>, [2, 6[ <span>@ 20</span>, [6, 8[ <span>@ 20</span>, [6, 7[ <span>@ 22</span></li>
+                      <li>y: [2, 8[ <span>@ -2</span></li>
+                      <li>y-offset : [0, 1, 2, 4, 5, 6, 7]</li>
+                    </ul>
+
+                    <li class="color_2"><strong>Level 2</strong></li>
+                    <ul>
+                      <li>x: [8, 10[ <span>@ 21</span>, [8, 10[ <span>@ 23</span>, [14, 16[ <span>@ 19</span>, [14, 16[ <span>@ 21</span></li>
+                      <li>y: [8, 10[ <span>@ -8</span>, [14, 16[ <span>@ -12</span></li>
+                      <li>y-offset: [0, 1, 2, 3, 4]</li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">What happens in N-D ?</h1>
+            </div>
+            <div class="main text-center">
+              <p>This process is completely</p>
+              <p>recursive !</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Identify the different types of cells</h1>
+            </div>
+            <div class="main text-center">
+              <video id="adapt" data-autoplay src="/canum_2022/videos/identify_0000.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Identify the different types of cells</h1>
+            </div>
+            <div class="main text-center">
+              <video id="adapt" data-autoplay src="/canum_2022/videos/identify_0001.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Identify the different types of cells</h1>
+            </div>
+            <div class="main text-center">
+              <video id="adapt" data-autoplay src="/canum_2022/videos/identify_0002.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Identify the different types of cells</h1>
+            </div>
+            <div class="main text-center">
+              <video id="adapt" data-autoplay src="/canum_2022/videos/identify_0003.mp4"/>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Algebra of sets</h1>
+            </div>
+            <div class="main text-center">
+              <div>
+                <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh.png"/>
+                <span>&#8745;</span>
+                <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh_ghost.png"/>
+              </div>
+              <span>=</span>
+              <div>
+              <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh_all.png"/>
+            </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Algebra of sets</h1>
+            </div>
+            <div class="main text-center">
+              <div>
+                <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh_all.png"/>
+                <span>\</span>
+                <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh.png"/>
+              </div>
+              <span>=</span>
+              <div>
+              <img class="border border-2" width="400px" data-autoplay src="/canum_2022/figures/mesh_ghost.png"/>
+            </div>
             </div>
           </div>
         </section>
@@ -245,19 +482,10 @@
           <section>
             <div class="sl-block">
               <div class="header">
-                <h1 class="title">The domain</h1>
+                <h1 class="title">An example</h1>
               </div>
               <div class="main">
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <div class="sl-block">
-              <div class="header">
-                <h1 class="title">The projection</h1>
-              </div>
-              <div class="main">
+                <video id="adapt" data-autoplay src="/canum_2022/videos/projection_light.mp4"/>
               </div>
             </div>
           </section>
@@ -268,8 +496,7 @@
                 <h1 class="title">The implementation</h1>
               </div>
               <div class="main">
-                <pre><code class="cpp">
-auto u = samurai::make_field&lt;double, 1&gt;("u", mesh);
+                <pre><code class="cpp data-trim data-noescape" data-line-numbers="1|2-4|6-9">auto u = samurai::make_field&lt;double, 1&gt;("u", mesh);
 ...
 auto set = samurai::intersection(mesh[level], mesh[level + 1])
           .on(level);
@@ -283,8 +510,350 @@ set([&](const auto& i, auto)
             </div>
           </section>
 
+          <section>
+            <h1>Creation of random meshes and their graduation</h1>
+            <hr>
+          </section>
+
+          <section>
+                <div class="row">
+                  <div class="col-6">
+                <img src="/canum_2022/figures/graduation_before.png"/>
+                before
+              </div>
+              <div class="col-6">
+                <img src="/canum_2022/figures/graduation_after.png"/>
+                after
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Create a mesh</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+constexpr std::size_t dim = 2;
+std::size_t start_level = 1;
+std::size_t max_refinement_level = 7;
+
+samurai::Box&lt;int, dim&gt; box({0, 0}, {1&lt;&lt;start_level, 1&lt;&lt;start_level});
+
+samurai::CellArray&lt;dim&gt; ca;
+ca[start_level] = {start_level, box};
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Add cells randomly</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+samurai::CellList&lt;dim&gt; cl;
+
+samurai::for_each_interval(ca, [&](std::size_t level, const auto& interval, const auto& index)
+{
+    auto choice = xt::random::choice(xt::xtensor_fixed&lt;bool, xt::xshape&lt;2&gt;&gt;{true, false}, interval.size());
+
+    for(int i = interval.start, ic = 0; i&lt;interval.end; ++i, ++ic)
+    {
+        if (choice[ic])
+        {
+            cl[level + 1][2*index].add_interval({2*i, 2*i+2});
+            cl[level + 1][2*index + 1].add_interval({2*i, 2*i+2});
+        }
+        else
+        {
+            cl[level][index].add_point(i);
+        }
+    }
+});
+
+ca = {cl, true};
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Tag cells to refine</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+std::size_t min_level = ca.min_level(), max_level = ca.max_level();
+xt::xtensor_fixed&lt;int, xt::xshape&lt;4, dim&gt;&gt; stencil{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+auto tag = samurai::make_field&lt;bool, 1&gt;("tag", ca);
+tag.fill(false);
+
+for(std::size_t level = min_level + 2; level &lt;= max_level; ++level)
+{
+    for(std::size_t level_below = min_level; level_below &lt; level - 1; ++level_below)
+    {
+        for(std::size_t i = 0; i &lt; stencil.shape()[0]; ++i)
+        {
+            auto s = xt::view(stencil, i);
+            auto set = samurai::intersection(samurai::translate(ca[level], s), ca[level_below])
+                      .on(level_below);
+            set([&](const auto& i, const auto& index)
+            {
+                tag(level_below, i, index[0]) = true;
+            });
+        }
+    }
+}
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Create a new mesh from the tag</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+samurai::CellList&lt;dim&gt; cl;
+
+samurai::for_each_cell(ca, [&](auto cell)
+{
+    auto i = cell.indices[0];
+    auto j = cell.indices[1];
+
+    if (tag[cell])
+    {
+        cl[cell.level + 1][{2*j}].add_interval({2*i, 2*i+2});
+        cl[cell.level + 1][{2*j + 1}].add_interval({2*i, 2*i+2});
+    }
+    else
+    {
+        cl[cell.level][{j}].add_point(i);
+    }
+});
+
+samurai::CellArray&lt;dim&gt; new_ca = {cl, true};
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <h1>The advection equation</h1>
+            <hr>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The problem</h1>
+              </div>
+              <div class="main">
+                We consider the well known linear advection equation
+                $$
+                \frac{\partial u}{\partial t} + a\frac{\partial u}{\partial x} = 0 \quad \text{with} \: a>0,
+                $$
+                with the initial condition
+                $$
+                u(., 0) = e^{-50x^2} \quad \text{for} \: x \in [0, 1[.
+                $$
+                And we use the upwind scheme
+                $$
+                \frac{u^{n+1}_i - u^n_i}{\Delta t} + a \frac{u^{n}_i - u^n_{i-1}}{\Delta x} = 0.
+                $$
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The initialization (1d)</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+template&lt;class Mesh&gt;
+auto init(Mesh& mesh)
+{
+    auto field = samurai::make_field&lt;double, 1&gt;("u", mesh);
+
+    samurai::for_each_cell(mesh, [&](auto& cell)
+    {
+        auto x = cell.center(0);
+
+        field[cell] = std::exp(-50*x*x);
+    });
+
+    return field;
+}
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">The initialization (2d)</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+template&lt;class Mesh&gt;
+auto init(Mesh& mesh)
+{
+    auto field = samurai::make_field&lt;double, 1&gt;("u", mesh);
+
+    samurai::for_each_cell(mesh, [&](auto& cell)
+    {
+        auto x = cell.center(0);
+        auto y = cell.center(1);
+
+        field[cell] = std::exp(-50*(x*x + y*y));
+    });
+
+    return field;
+}
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Upwind scheme as an expression</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp data-trim data-noescape" data-line-numbers="8-13|15-20">template&lt;class TInterval&gt;
+class upwind_op : public samurai::field_operator_base&lt;TInterval&gt;,
+                  public samurai::field_expression&lt;upwind_op&lt;TInterval&gt;&gt;
+{
+    public:
+        INIT_OPERATOR(upwind_op)
+
+        template&lt;class Field&gt;
+        inline auto operator()(samurai::Dim&lt;1&gt;, const Field& u) const
+        {
+            double dx = 1./(1&lt;&lt;level);
+            return (u(level, i) - u(level, i-1))/dx;
+        }
+
+        template&lt;class Field>
+        inline auto operator()(samurai::Dim&lt;2&gt;, const Field& u) const
+        {
+            double dx = 1./(1&lt;&lt;level);
+            return (u(level, i, j) - u(level, i-1, j) + u(level, i, j) - u(level, i, j-1))/dx;
+        }
+};
+
+template&lt;class... CT>
+inline auto upwind(CT &&... e)
+{
+    return samurai::make_field_operator_function&lt;upwind_op&gt;(std::forward&lt;CT&gt;(e)...);
+}
+                  </code></pre>
+                </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Simulation on uniform mesh</h1>
+              </div>
+              <div class="main">
+                <pre><code class="cpp">
+for(std::size_t ite=0; ite&lt;200; ++ite)
+{
+    samurai::update_ghost_mr(field, update_bc);
+
+    field_np1 = field - dt*upwind(field);
+
+    std::swap(field.array(), field_np1.array());
+
+    samurai::save(fmt::format("mesh_{}", ite+1), mesh, field);
+}
+                </code></pre>
+              </div>
+          </div>
         </section>
-      </div>
+
+        <section>
+          <div class="sl-block">
+            <div class="header">
+              <h1 class="title">Simulation with adaptive mesh refinement</h1>
+            </div>
+            <div class="main">
+              <pre><code class="cpp">
+auto MRadaptation = samurai::make_MRAdapt(field, update_bc);
+double eps = 1e-4;
+double regularity = 2;
+
+for(std::size_t ite=0; ite&lt;200; ++ite)
+{
+  if (max_level &gt; min_level)
+  {
+      MRadaptation(eps, regularity);
+  }
+
+  samurai::update_ghost_mr(field, update_bc);
+
+  field_np1 = field - dt*upwind(field);
+
+  std::swap(field.array(), field_np1.array());
+
+  samurai::save(fmt::format("mesh_{}", ite+1), mesh, field);
+}
+              </code></pre>
+            </div>
+        </div>
+      </section>
+
+      <section>
+            <video data-autoplay src="/canum_2022/videos/advection_2d_high.mp4"/>
+      </section>
+
+        </section>
+
+          <section>
+            <div class="sl-block">
+              <div class="header">
+                <h1 class="title">Ongoing work</h1>
+              </div>
+              <div class="main" style="font-size: 20px">
+                <ul>
+                  <li>Lattice Boltzmann methods and multiresolution - <strong>Thomas Bellotti</strong> - LMO</li>
+                  <li>Magnetism plasma column - <strong>Louis Reboul</strong> and <strong>Alejandro Alvarez</strong> - LPP</li>
+                  <li>Task-based parallelism for adaptive mesh refinement - <strong>Kevin Barré</strong> - Onera, Google</li>
+                  <li>Direct numerical simulation of lithium-ion batteries based on high-resolution 3D images of porous electrode microstructures - <strong>Ali Asad</strong> - Total</li>
+                  <li>Sharp interface method for low Mach two-phase flows - <strong>Nicolas Grenier</strong> et <strong>Christian Tenaud</strong> - LIMSI, EM2C</li>
+                  <li>Low-Mach reactive flows - <strong>Christian Tenaud</strong> et <strong>Laurent Series</strong> - EM2C</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="row">
+              <div class="col-6">
+                <img src="./figures/logo.png">
+              </div>
+              <div class="col-6 align-self-center text-end">
+                <h1 class="title-talk">Samurai</h1>
+                <a href="https://github.com/hpc-maths/samurai">https://github.com/hpc-maths/samurai</a>
+              </div>
+            </div>
+          </section>
+
+          </div>
   </div>
   
 
