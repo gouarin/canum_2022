@@ -36,6 +36,18 @@ intervals = {
     2: [[10, 12], [16, 18]],
 }
 
+intervals_ghost = {
+    0: [[-1, 0], [2, 3], [4, 5], [6, 7]],
+    1: [[3, 4], [5, 6], [8, 9], [10, 11]],
+    2: [[9, 10], [12, 13], [15, 16], [18, 19]],
+}
+
+intervals_all = {
+    0: [[-1, 3], [4, 7]],
+    1: [[3, 11]],
+    2: [[9, 13], [15, 19]],
+}
+
 with register_font("../theme/fonts/Oswald-Regular.ttf"):
     Text.set_default(font="Oswald")
 
@@ -43,12 +55,12 @@ MathTex.set_default(tex_template=oswald, font_size=30, color=default_color)
 
 Interval.set_default(stroke_width=stroke_width, color=default_color, tick_size=0.1)
 
-def init_mesh():
+def init_mesh(interval=intervals):
     mesh = []
     colors = []
     levels = []
 
-    for k, v in intervals.items():
+    for k, v in interval.items():
         mesh.append(VGroup())
         colors.append(intervals_color[k])
         levels.append(k)
@@ -464,27 +476,106 @@ class projection_light(MovingCameraScene):
         self.play(FadeIn(arrows))
         self.wait()
 
-class projection_code(Scene):
+class mesh(Scene):
     def construct(self):
-        step_1='auto u = samurai::make_field<double, 1>("u", mesh);'
-        step_2 = """
-auto set = samurai::intersection(mesh[level], mesh[level + 1])
-          .on(level);
-        """
+        self.camera.frame_width = 8.2
+        self.camera.resize_frame_shape()
+        self.camera.frame_center = [3, 2, 0]
+        mesh, colors, levels = init_mesh()
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
+        self.add(mesh)
 
-# auto set = samurai::intersection(mesh[level], mesh[level + 1])
-#           .on(level);
+class mesh_ghost(Scene):
+    def construct(self):
+        self.camera.frame_width = 8.2
+        self.camera.resize_frame_shape()
+        self.camera.frame_center = [3, 2, 0]
+        mesh, colors, levels = init_mesh(intervals_ghost)
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
+        self.add(mesh)
 
-# set([&](const auto& i, auto)
-# {
-#     u(level, i) = 0.5*(u(level + 1, 2*i) + u(level + 1, 2*i + 1));
-# });
-#         '''
+class mesh_all(Scene):
+    def construct(self):
+        self.camera.frame_width = 8.2
+        self.camera.resize_frame_shape()
+        self.camera.frame_center = [3, 2, 0]
+        mesh, colors, levels = init_mesh()
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
 
-        c_1 = Code(code=step_1, tab_width=4, language="cpp", font="Monospace", insert_line_no=False)
-        self.add(c_1)
-        c_2 = Code(code=step_2, tab_width=4, language="cpp", font="Monospace", insert_line_no=False)
-        c_2.next_to(c_1, DOWN)
-        self.add(c_2)
+        mesh_g, colors, levels = init_mesh(intervals_ghost)
+        [m.set_color(c) for m, c in zip(mesh_g, colors)]
+        [m.set_opacity(0.6) for m in mesh_g]
+        [m.shift(2*l*UP) for m, l in zip(mesh_g, levels)]
+        self.add(mesh, mesh_g)
 
+class identify(MovingCameraScene):
+    def construct(self):
+        mesh, colors, levels = init_mesh()
+        [m.set_color(c) for m, c in zip(mesh, colors)]
+        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
+
+        mesh_ghost, colors, levels = init_mesh(intervals_ghost)
+        [m.set_color(c) for m, c in zip(mesh_ghost, colors)]
+
+        [m.shift(2*l*UP) for m, l in zip(mesh_ghost, levels)]
+
+        level_tex = VGroup()
+        for i in range(3):
+            level_tex.add(MathTex(f"Level \\, {i} \\rightarrow ", font_size=36, color=intervals_color[i]))
+            level_tex[-1].move_to([0, -1.5 - 0.75*i, 0])
+
+        all_all = VGroup(mesh_ghost, level_tex)
+        self.camera.frame.move_to(all_all)
+        self.camera.frame.scale(1.1)
+
+        t = VGroup()
+        for k, v in intervals.items():
+            dx = 1./(1<<k)
+            for i, e in enumerate(v):
+                t += MathTex(f"[{e[0]}, {e[1]}[", font_size=36, color=intervals_color[k])
+                if i==0:
+                    t[-1].next_to(level_tex[k], RIGHT)
+                else:
+                    t[-1].next_to(t[-2], RIGHT)
+
+        t_g = VGroup()
+        for k, v in intervals_ghost.items():
+            dx = 1./(1<<k)
+            for i, e in enumerate(v):
+                t_g += MathTex(f"[{e[0]}, {e[1]}[", font_size=36, color=intervals_color[k])
+                if i==0:
+                    t_g[-1].next_to(level_tex[k], RIGHT)
+                else:
+                    t_g[-1].next_to(t_g[-2], RIGHT)
+
+        t_a = VGroup()
+        for k, v in intervals_all.items():
+            dx = 1./(1<<k)
+            for i, e in enumerate(v):
+                t_a += MathTex(f"[{e[0]}, {e[1]}[", font_size=36, color=intervals_color[k])
+                if i==0:
+                    t_a[-1].next_to(level_tex[k], RIGHT)
+                else:
+                    t_a[-1].next_to(t_a[-2], RIGHT)
+
+        self.next_section()
+        self.add(mesh, level_tex, t)
+        self.wait()
+
+        self.next_section()
+
+        self.play(FadeIn(mesh_ghost), FadeOut(t))
+        self.wait()
+
+        self.next_section()
+
+        self.play(FadeOut(mesh), FadeIn(t_g))
+        self.wait()
+
+        self.next_section()
+
+        self.play(FadeIn(mesh), Transform(t_g, t_a))
         self.wait()
