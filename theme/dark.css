@@ -38,7 +38,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 :root {
   --r-background-color: rgb(0, 0, 0);
   --r-main-font: Gelasio;
-  --r-line-color: #750013;
+  --r-line-color: #517b77;
   --r-main-font-size: 26px;
   --r-main-color: rgb(255, 255, 255);
   --r-block-margin: 20px;
@@ -56,9 +56,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-heading3-size: 1.3em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #750013;
-  --r-link-color-dark: #750013;
-  --r-link-color-hover: #caa000;
+  --r-link-color: #517b77;
+  --r-link-color-dark: #517b77;
+  --r-link-color-hover: #517b77;
   --r-selection-background-color: #98bdef;
   --r-selection-color: #fff;
 }
@@ -138,7 +138,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal span
 {
-  color : #9b001a;
+  color : var(--r-line-color);
 }
 
 .reveal hr {
