@@ -1,3 +1,4 @@
+from tkinter import RIGHT
 from turtle import color
 import numpy as np
 from manim import *
@@ -17,18 +18,23 @@ oswald.add_to_preamble(
 """,
 )
 
-config.background_color = "#ffffff"
-# config.background_color = "#000000"
+# light
+# config.background_color = "#ffffff"
+# default_color = "#000001"
+# dark
+config.background_color = "#000000"
+default_color = "#ffffff"
 
 center = [2, 3, 0]
 
-stroke_width = 4
-default_color = "#000001"
+stroke_width = 6
 
 intervals_color = ["#517b77", "#caa000", "#f66000"]
 # intervals_color = ["#f98a00", "#009a8e", "#750013"]
 # intervals_color = ["#A1C181", "#FCCA46", "#FE7F2D"]
 # intervals_color = ["#095473", "#5B95AA", "#349B90", "#B9D6BC", "#F2D2A2"]
+
+offset_color = "#9b001a"
 
 intervals = {
     0: [[0, 2], [5, 6]],
@@ -48,7 +54,7 @@ intervals_all = {
     2: [[9, 13], [15, 19]],
 }
 
-with register_font("../theme/fonts/Oswald-Regular.ttf"):
+with register_font("../public/theme/fonts/Oswald-Regular.ttf"):
     Text.set_default(font="Oswald")
 
 MathTex.set_default(tex_template=oswald, font_size=30, color=default_color)
@@ -93,7 +99,7 @@ def init_dx(ug):
 
     return dx, level_info
 
-class example_1d_light(MovingCameraScene):
+class example_1d(MovingCameraScene):
     def construct(self):
         self.next_section()
         mesh, colors, levels = init_mesh()
@@ -198,8 +204,9 @@ class example_1d_light(MovingCameraScene):
         self.play(r0.animate.move_to([0.25, 2.3, 0]), Transform(c0, c4))
         self.wait()
 
-class interval_scene_1_light(MovingCameraScene):
+class interval_scene(MovingCameraScene):
     def construct(self):
+        self.next_section()
         mesh, colors, levels = init_mesh()
         [m.set_color(c) for m, c in zip(mesh, colors)]
 
@@ -223,6 +230,8 @@ class interval_scene_1_light(MovingCameraScene):
         self.wait(1)
 
         r = []
+        offsets = VGroup()
+        index = 0
         for k, v in intervals.items():
             dx = 1./(1<<k)
             for i, e in enumerate(v):
@@ -235,61 +244,33 @@ class interval_scene_1_light(MovingCameraScene):
                 if i==0:
                     t.next_to(level_tex[k], RIGHT)
                 else:
-                    t.next_to(r[-2], RIGHT)
+                    t.next_to(offsets[-1], RIGHT)
+
+                o = MathTex(f"@{index - e[0]}", font_size=36, color=offset_color)
+                o.next_to(t, RIGHT)
+                offsets += o
+
                 self.play(Transform(r[-1], t))
+                index += e[1] - e[0]
                 self.wait()
 
-        self.wait()
-
-
-class interval_scene_2_light(MovingCameraScene):
-    def construct(self):
-        mesh, colors, levels = init_mesh()
-        [m.set_color(c) for m, c in zip(mesh, colors)]
-
-        axe = init_axe()
-        all = VGroup(axe, mesh)
-
-        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
-
-        level_tex = VGroup()
-        for i in range(3):
-            level_tex.add(MathTex(f"Level \\, {i} \\rightarrow ", font_size=36, color=intervals_color[i]))
-            level_tex[-1].move_to([0, -1.5 - 0.75*i, 0])
-
-        all_all = VGroup(all, level_tex)
-        self.camera.frame.move_to(all_all)
-        self.camera.frame.scale(1.1)
-
-        [m.add_cell_numbers(font_size=24) for me in mesh for m in me]
-
+        mesh_field = mesh.copy()
         index = 0
         for k, v in intervals.items():
             for ie, e in enumerate(v):
                 for i in range(e[1]-e[0]):
-                    center = mesh[k][ie].cell_numbers[i] .get_center()
-                    mesh[k][ie].cell_numbers[i] = MathTex(index, font_size=24)
-                    mesh[k][ie].cell_numbers[i].move_to(center)
+                    center = mesh_field[k][ie].cell_numbers[i] .get_center()
+                    mesh_field[k][ie].cell_numbers[i] = MathTex(index, font_size=24)
+                    mesh_field[k][ie].cell_numbers[i].move_to(center)
                     index += 1
 
-        self.add(all_all)
-
-        index = 0
-        for k, v in intervals.items():
-            dx = 1./(1<<k)
-            for i, e in enumerate(v):
-                t1 = MathTex(f"[{e[0]}, {e[1]}[@{index - e[0]}", font_size=36, color=intervals_color[k])
-                if i==0:
-                    t1.next_to(level_tex[k], RIGHT)
-                else:
-                    t1.next_to(t0, RIGHT)
-                t0 = t1
-                index += e[1] - e[0]
-                self.add(t0)
-
+        self.next_section()
+        self.play(Transform(mesh, mesh_field))
+        self.wait()
+        self.play(Create(offsets))
         self.wait()
 
-class tree_light(Scene):
+class tree(Scene):
     def construct(self):
         self.camera.frame_width = 6
         self.camera.resize_frame_shape()
@@ -351,20 +332,20 @@ class tree_light(Scene):
             self.add(nodes[i], nodes[i+1])
             self.wait(2)
 
-class mesh_2d_scene_1_light(MovingCameraScene):
+class mesh_2d_scene(MovingCameraScene):
     def construct(self):
         self.next_section()
         level0 = VGroup()
         for j in range(4):
             for i in range(4):
-                r = Square(1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                r = Square(1, color=default_color, fill_color=intervals_color[0], fill_opacity=1)
                 r.move_to([i, j, 0])
                 level0.add(r)
 
         level1 = VGroup()
         for j in range(4):
             for i in range(4):
-                r = Square(0.5, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                r = Square(0.5, color=default_color, fill_color=intervals_color[2], fill_opacity=1)
                 r.move_to([0.75+i*0.5, 0.75+j*0.5, 0])
                 level1.add(r)
 
@@ -413,14 +394,14 @@ class mesh_2d_scene_1_light(MovingCameraScene):
 
         stencil = VGroup()
         for i in range(5):
-            r = Square(.5, color=WHITE, fill_color=intervals_color[1], fill_opacity=1)
+            r = Square(.5, color=default_color, fill_color=intervals_color[1], fill_opacity=1)
             r.move_to([1.75, 1.75, 0])
             stencil += r
 
         field = VGroup()
         length = 0.4
         for i in range(len(path)):
-            r = Square(length, color=WHITE, fill_color=path[i].color, fill_opacity=1)
+            r = Square(length, color=default_color, fill_color=path[i].color, fill_opacity=1)
             r.move_to([1.5 + length/2 - len(path)/2 * length + i*length, -1.25, 0])
             field += r
 
@@ -433,7 +414,7 @@ class mesh_2d_scene_1_light(MovingCameraScene):
         s_i = [12, 17, 22, 23, 24]
         field_s = VGroup()
         for i in s_i:
-            r = Square(length, color=WHITE, fill_color=intervals_color[1], fill_opacity=1)
+            r = Square(length, color=default_color, fill_color=intervals_color[1], fill_opacity=1)
             r.move_to([1.5 + length/2 - len(path)/2 * length + i*length, -1.25, 0])
             field_s += r
 
@@ -450,7 +431,7 @@ class mesh_2d_scene_1_light(MovingCameraScene):
         self.wait(1)
 
 
-class projection_light(MovingCameraScene):
+class projection(MovingCameraScene):
     def construct(self):
         i0 = Interval(0, [0, 4], color=intervals_color[0])
         i1 = Interval(1, [2, 6], color=intervals_color[1])
@@ -491,10 +472,16 @@ class mesh_ghost(Scene):
         self.camera.frame_width = 8.2
         self.camera.resize_frame_shape()
         self.camera.frame_center = [3, 2, 0]
-        mesh, colors, levels = init_mesh(intervals_ghost)
-        [m.set_color(c) for m, c in zip(mesh, colors)]
-        [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
-        self.add(mesh)
+
+        ghost = VGroup()
+        for level, v in intervals_ghost.items():
+            dx = 1./(1<<level)
+            for i in v:
+                r = Rectangle(width=dx, height=0.1, color=intervals_color[level], fill_opacity=0.5)
+                r.move_to([dx*(i[0]+0.5), 2*level, 0])
+                ghost += r
+
+        self.add(ghost)
 
 class mesh_all(Scene):
     def construct(self):
@@ -505,11 +492,15 @@ class mesh_all(Scene):
         [m.set_color(c) for m, c in zip(mesh, colors)]
         [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
 
-        mesh_g, colors, levels = init_mesh(intervals_ghost)
-        [m.set_color(c) for m, c in zip(mesh_g, colors)]
-        [m.set_opacity(0.6) for m in mesh_g]
-        [m.shift(2*l*UP) for m, l in zip(mesh_g, levels)]
-        self.add(mesh, mesh_g)
+        ghost = VGroup()
+        for level, v in intervals_ghost.items():
+            dx = 1./(1<<level)
+            for i in v:
+                r = Rectangle(width=dx, height=0.1, color=intervals_color[level], fill_opacity=0.5)
+                r.move_to([dx*(i[0]+0.5), 2*level, 0])
+                ghost += r
+
+        self.add(mesh, ghost)
 
 class identify(MovingCameraScene):
     def construct(self):
@@ -517,10 +508,13 @@ class identify(MovingCameraScene):
         [m.set_color(c) for m, c in zip(mesh, colors)]
         [m.shift(2*l*UP) for m, l in zip(mesh, levels)]
 
-        mesh_ghost, colors, levels = init_mesh(intervals_ghost)
-        [m.set_color(c) for m, c in zip(mesh_ghost, colors)]
-
-        [m.shift(2*l*UP) for m, l in zip(mesh_ghost, levels)]
+        mesh_ghost = VGroup()
+        for level, v in intervals_ghost.items():
+            dx = 1./(1<<level)
+            for i in v:
+                r = Rectangle(width=dx, height=0.1, color=intervals_color[level], fill_opacity=0.5)
+                r.move_to([dx*(i[0]+0.5), 2*level, 0])
+                mesh_ghost += r
 
         level_tex = VGroup()
         for i in range(3):

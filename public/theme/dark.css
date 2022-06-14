@@ -63,17 +63,32 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-selection-color: #fff;
 }
 
+.reveal .color_0
+{
+  color: #517b77;
+}
+
+.reveal .color_1
+{
+  color: #caa000;
+}
+
+.reveal .color_2
+{
+  color: #f66000;
+}
+
 .reveal-viewport {
-  background: rgb(0, 0, 0);
+  background: #fff;
   background-color: var(--r-background-color);
 }
 
 .reveal {
-  background-color: var(--r-background-color);
   font-family: var(--r-main-font);
   font-size: var(--r-main-font-size);
   font-weight: normal;
   color: var(--r-main-color);
+  background-color: var(--r-background-color);
 }
 
 .reveal ::selection {
@@ -123,7 +138,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal span
 {
-  color : #af0000;
+  color : #9b001a;
 }
 
 .reveal hr {
@@ -209,6 +224,32 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal ul ul ul {
   list-style-type: circle;
+}
+
+.reveal ul.myclass
+{
+  list-style-type: none;
+  font-size: 13px;
+}
+
+.reveal ul.myclass ul
+{
+  list-style-type: none;
+  padding-left: 10px;
+
+}
+
+.reveal ul.myclass li {
+  font-size: 16px;
+  margin: 0 5px 5px 0;
+}
+
+.reveal ul.myclass ul {
+  margin: 0 5px 10px 0;
+}
+
+.reveal .caveat {
+  font-family: caveat;
 }
 
 .reveal ul ul,

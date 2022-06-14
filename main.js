@@ -28,19 +28,20 @@ function get_theme_ext(href)
 function update_img() {
   var theme = document.getElementById("theme");
   var href = theme.getAttribute("href");
-  var theme_ext = get_theme_ext(href);
+  var theme_name = get_theme_ext(href);
   var el = document.querySelectorAll("#adapt");
   for (var i = 0; i < el.length; i++) {
-    var data = el[i].getAttribute("src").split(".");
-    console.log(data);
-    var ext = "_" + theme_ext + "." + data[1];
-    var filename = data[0].split("_");
-    if (filename.length == 1) {
-      el[i].setAttribute("src", filename[0] + ext);
-    }
-    else {
-      el[i].setAttribute("src", filename.slice(0,-1).join('_') + ext);
-    }
+    var data = el[i].getAttribute("src").split("/");
+    el[i].setAttribute("src", "/" + theme_name + "/" + data.slice(3).join("/"));
+    console.log(data, el[i]);
+    // var ext = "_" + theme_ext + "." + data[1];
+    // var filename = data[0].split("_");
+    // if (filename.length == 1) {
+    //   el[i].setAttribute("src", filename[0] + ext);
+    // }
+    // else {
+    //   el[i].setAttribute("src", filename.slice(0,-1).join('_') + ext);
+    // }
 
   }
 }
