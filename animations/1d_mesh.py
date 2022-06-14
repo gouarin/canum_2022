@@ -19,11 +19,13 @@ oswald.add_to_preamble(
 )
 
 # light
-# config.background_color = "#ffffff"
-# default_color = "#000001"
+background_color = "#ffffff"
+default_color = "#000001"
+config.background_color = background_color
 # dark
-config.background_color = "#000000"
-default_color = "#ffffff"
+# background_color = "#000001"
+# default_color = "#ffffff"
+# config.background_color = background_color
 
 center = [2, 3, 0]
 
@@ -275,8 +277,8 @@ class tree(Scene):
         self.camera.frame_width = 6
         self.camera.resize_frame_shape()
 
-        r0 = Square(1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
-        s = Square(0.1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+        r0 = Square(1, color=background_color, fill_color=intervals_color[0], fill_opacity=1)
+        s = Square(0.1, color=background_color, fill_color=intervals_color[0], fill_opacity=1)
         r0.next_to(s, UP)
 
         divide = VGroup(VGroup(r0))
@@ -287,7 +289,7 @@ class tree(Scene):
             for root in  divide[l]:
                 for j in range(2):
                     for i in range(2):
-                        r = Square(s_length/2, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                        r = Square(s_length/2, color=background_color, fill_color=intervals_color[0], fill_opacity=1)
                         r.move_to(root.get_center() + [-s_length/4 + s_length/2*i, -s_length/4 + s_length/2*j, 0])
                         divide[-1] += r
             s_length /= 2
@@ -296,7 +298,7 @@ class tree(Scene):
         for root in [divide[2][3], divide[2][6], divide[2][9], divide[2][12]]:
             for j in range(2):
                 for i in range(2):
-                    r = Square(s_length/2, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                    r = Square(s_length/2, color=background_color, fill_color=intervals_color[2], fill_opacity=1)
                     r.move_to(root.get_center() + [-s_length/4 + s_length/2*i, -s_length/4 + s_length/2*j, 0])
                     divide[-1] += r
 
@@ -308,7 +310,7 @@ class tree(Scene):
             lines += VGroup()
             for j in nodes[i]:
                 for k in range(4):
-                    n = Square(0.1, color=WHITE, fill_color=intervals_color[0], fill_opacity=1)
+                    n = Square(0.1, color=background_color, fill_color=intervals_color[0], fill_opacity=1)
                     n.move_to(j.get_center() + [-length/2 + length/8 + k*length/4, -0.3, 0])
                     nodes[-1] += n
                     lines[-1] += Line(j.get_center(), n.get_center(), stroke_width=1, color=default_color)
@@ -320,13 +322,13 @@ class tree(Scene):
         i = 3
         for j in [nodes[2][3], nodes[2][6], nodes[2][9], nodes[2][12]]:
             for k in range(4):
-                n = Square(0.1, color=WHITE, fill_color=intervals_color[2], fill_opacity=1)
+                n = Square(0.1, color=background_color, fill_color=intervals_color[2], fill_opacity=1)
                 n.move_to(j.get_center() + [-length/2 + length/8 + k*length/4, -0.3, 0])
                 nodes[-1] += n
                 lines[-1] += Line(j.get_center(), n.get_center(), stroke_width=1, color=default_color)
 
         self.add(r0, s)
-        self.wait(3)
+        self.wait(2)
         for i in range(3):
             self.add(lines[i], divide[i+1])
             self.add(nodes[i], nodes[i+1])
